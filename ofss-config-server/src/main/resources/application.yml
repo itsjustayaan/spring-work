@@ -1,0 +1,16 @@
+server:
+  port: 8888
+spring:
+ application:
+  name: ofss-config-server
+ profiles:
+  include: native,default
+ cloud:
+    config:
+      discovery:
+        enabled: false
+      server:
+       native:
+        searchLocations: C:/Users/Ayaan/SpringWork/config
+       encrypt:
+        enabled: true

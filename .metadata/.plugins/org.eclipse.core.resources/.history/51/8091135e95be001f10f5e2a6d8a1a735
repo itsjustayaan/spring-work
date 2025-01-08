@@ -1,0 +1,255 @@
+package com.working;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.working.dao.InvestmentAdvisorDAO;
+import com.working.dao.InvestorDAO;
+import com.working.dao.StockDAO;
+import com.working.model.InvestmentAdvisor;
+import com.working.model.Investor;
+import com.working.model.Stock;
+
+class TestBasketInvestingApplication {
+
+    @Mock
+    private InvestorDAO investorDAO;
+    
+    @Mock
+    private InvestmentAdvisorDAO investorAdvisorDAO;
+    
+    @Mock
+    private StockDAO stockDao;
+
+    @Mock
+    private ObjectMapper objectMapper;
+
+    @Mock
+    private InvestmentAdvisor advisor1;
+
+    @Mock
+    private InvestmentAdvisor advisor2;
+
+    @Mock
+    private Investor investor1;
+
+    @Mock
+    private Investor investor2;
+
+    @Mock
+    private Investor investor3;
+    
+    @Mock
+    private Stock stock1;
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this); // Initialize mocks
+    }
+
+    @Test
+    @Order(1)
+    void testCreateAdvisors1() {
+        advisor1 = new InvestmentAdvisor("Jane Advisor", "jane@example.com", "password");
+        when(investorAdvisorDAO.save(any(InvestmentAdvisor.class))).thenReturn(advisor1);
+
+        InvestmentAdvisor createdAdvisor = investorAdvisorDAO.save(advisor1);
+        
+        assertNotNull(createdAdvisor);
+        assertEquals("Jane Advisor", createdAdvisor.getIaName());
+    }
+
+    @Test
+    @Order(2)
+    void testCreateAdvisors2() {
+        advisor2 = new InvestmentAdvisor("Tom Advisor", "sura.mitraa@gmail.com", "password");
+        when(investorAdvisorDAO.save(any(InvestmentAdvisor.class))).thenReturn(advisor2);
+
+        InvestmentAdvisor createdAdvisor = investorAdvisorDAO.save(advisor2);
+
+        assertNotNull(createdAdvisor);
+        assertEquals("Tom Advisor", createdAdvisor.getIaName());
+    }
+
+    @Test
+    @Order(3)
+    void testCreateInvestors1() {
+        investor1 = new Investor("Alice Smith", "alice@example.com", "password1", 10000);
+        when(investorDAO.save(any(Investor.class))).thenReturn(investor1);
+
+        Investor createdInvestor = investorDAO.save(investor1);
+
+        assertNotNull(createdInvestor);
+        assertEquals("Alice Smith", createdInvestor.getInvestorName());
+    }
+
+    @Test
+    @Order(4)
+    void testCreateInvestors2() {
+        investor2 = new Investor("Bob Johnson", "bob@example.com", "password2", 20000);
+        when(investorDAO.save(any(Investor.class))).thenReturn(investor2);
+
+        Investor createdInvestor = investorDAO.save(investor2);
+
+        assertNotNull(createdInvestor);
+        assertEquals("Bob Johnson", createdInvestor.getInvestorName());
+    }
+
+    @Test
+    @Order(5)
+    void testCreateInvestors3() {
+        investor3 = new Investor("Charlie Brown", "charlie@example.com", "password3", 30000);
+        when(investorDAO.save(any(Investor.class))).thenReturn(investor3);
+
+        Investor createdInvestor = investorDAO.save(investor3);
+        
+        assertNotNull(createdInvestor);
+        assertEquals("Charlie Brown", createdInvestor.getInvestorName());
+    }
+
+//    @Test
+//    @Order(6)
+//    void testInsertStocks() {
+//    	stock1 = new Stock("INE423A01024", "Adani Enterprises Ltd.", "Metals & Mining", "ADANIENT", "2450.50");
+//        doNothing().when(stockDao).save(stock1);
+//        
+//        verify(stockDao, times(1)).save(any(Stock.class));
+//    }
+
+//    @Test
+//    @Order(7)
+//    void testInsertBaskets() {
+//        doNothing().when(investorDAO).insertBaskets(any(), any(), any());
+//
+//        investorDAO.insertBaskets("Diversified Portfolio", "A mix of stocks from various industries", 1);
+//
+//        verify(investorDAO, times(1)).insertBaskets(any(), any(), any());
+//    }
+//
+//    @Test
+//    @Order(8)
+//    void testInsertBasketAndStock() {
+//        doNothing().when(investorDAO).insertBasketAndStock(any(), any(), any());
+//
+//        investorDAO.insertBasketAndStock(1, "INE423A01024", 100);
+//
+//        verify(investorDAO, times(1)).insertBasketAndStock(any(), any(), any());
+//    }
+//
+//    @Test
+//    @Order(9)
+//    void testInsertInvestorAndBasket() {
+//        doNothing().when(investorDAO).insertInvestorAndBasket(any(), any(), any(), any());
+//
+//        investorDAO.insertInvestorAndBasket(1, 1, 100, new BigDecimal(2450.50));
+//
+//        verify(investorDAO, times(1)).insertInvestorAndBasket(any(), any(), any(), any());
+//    }
+//
+//    @Test
+//    @Order(10)
+//    void testCheckAbsoluteReturns() {
+//        when(investorDAO.findByInvestorEmail("alice@example.com")).thenReturn(Optional.of(investor1));
+//
+//        BigDecimal absoluteReturn = investorDAO.calculateAbsoluteReturn(investor1);
+//
+//        assertEquals(BigDecimal.valueOf(1469786737.5), absoluteReturn);
+//    }
+//
+//    @Test
+//    @Order(11)
+//    void testUpdateInvestmentAdvisor() {
+//        InvestmentAdvisor updatedAdvisor = new InvestmentAdvisor(advisor1.getIaId(), "Updated Advisor", "sura.mitraa@gmail.com", "updatedpassword");
+//        when(investorDAO.save(any(InvestmentAdvisor.class))).thenReturn(updatedAdvisor);
+//
+//        InvestmentAdvisor result = investorDAO.save(updatedAdvisor);
+//
+//        assertNotNull(result);
+//        assertEquals("Updated Advisor", result.getIaName());
+//    }
+//
+//    @Test
+//    @Order(12)
+//    void testCreateBasket() {
+//        String createBasketJson = "{ \"basketId\": 0, \"basketName\": \"New Basket\", \"basketSummary\": \"Summary\", \"iaId_ref\": 1, \"basketStockList\": [], \"investorAndBasketList\": [] }";
+//        when(investorDAO.createBasket(anyString(), anyString(), anyInt(), any())).thenReturn(true);
+//
+//        boolean isCreated = investorDAO.createBasket("New Basket", "Summary", 1, new BigDecimal(100));
+//
+//        assertTrue(isCreated);
+//    }
+//
+//    @Test
+//    @Order(13)
+//    void testForgetPassword() {
+//        when(investorDAO.findByInvestorEmail("sura.mitraa@gmail.com")).thenReturn(Optional.of(advisor2));
+//
+//        Optional<InvestmentAdvisor> result = investorDAO.findByInvestorEmail("sura.mitraa@gmail.com");
+//
+//        assertTrue(result.isPresent());
+//        assertEquals("sura.mitraa@gmail.com", result.get().getIaEmail());
+//    }
+
+//    @Test
+//    @Order(14)
+//    void testUpdateInvestor() {
+//        when(investorDAO.findByInvestorEmail(investor1.getInvestorEmail())).thenReturn(Optional.of(investor1));
+//        Investor updatedInvestor = new Investor(
+//                investor1.getInvestorId(),
+//                "Updated Investor Name",
+//                "updated.email@example.com", 
+//                "newpassword"
+//            );
+//
+//        when(investorDAO.save(any(Investor.class))).thenReturn(updatedInvestor);
+//
+//        Investor result = investorDAO.save(updatedInvestor);
+//
+//        assertNotNull(result);
+//        assertEquals("Updated Investor Name", result.getInvestorName());
+//    }
+
+    @Test
+    @Order(15)
+    void testUpdateInvestorBalance() {
+
+        Investor updatedBalanceInvestor = new Investor("Investor Name", "investor.email@example.com", "password", 20000.829);
+        when(investorDAO.save(any(Investor.class))).thenReturn(updatedBalanceInvestor);
+
+        Investor result = investorDAO.save(updatedBalanceInvestor);
+
+        assertNotNull(result);
+        assertEquals(20000.829, result.getInvestorBalance());
+    }
+
+//    @Test
+//    @Order(16)
+//    void testSellInvestorBasket() {
+//        when(investorDAO.sellBasket(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(true);
+//
+//        boolean isSold = investorDAO.sellBasket(1, 1, 20, 100);
+//    
+//        assertTrue(isSold);
+//    }
+}

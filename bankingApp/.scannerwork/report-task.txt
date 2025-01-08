@@ -1,0 +1,6 @@
+projectKey=VisitorApp
+serverUrl=http://localhost:9000
+serverVersion=10.6.0.92116
+dashboardUrl=http://localhost:9000/dashboard?id=VisitorApp
+ceTaskId=9974b56f-087c-4e61-9f7b-939f73af0796
+ceTaskUrl=http://localhost:9000/api/ce/task?id=9974b56f-087c-4e61-9f7b-939f73af0796

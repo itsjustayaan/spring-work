@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Space Invaders Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        body {
+            background-color: #000;
+            overflow: hidden;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            color: #00ff00;
+            text-shadow: 2px 2px 0px #000;
+            margin-bottom: 30px;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        form {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00ff00;
+            width: 320px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #00ff00;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #000;
+            color: #00ff00;
+            font-size: 1.2em;
+            text-align: center;
+            border: 2px solid #00ff00;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            animation: input-glow 1.5s infinite alternate;
+        }
+
+        @keyframes input-glow {
+            from {
+                box-shadow: 0 0 10px #00ff00;
+            }
+            to {
+                box-shadow: 0 0 20px #00ff00;
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #000;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px #000;
+            border-radius: 5px;
+            animation: button-glow 1.5s infinite alternate;
+        }
+
+        button:hover {
+            background-color: #00ff00;
+            color: #000;
+        }
+
+        @keyframes button-glow {
+            from {
+                box-shadow: 0 0 10px #00ff00;
+            }
+            to {
+                box-shadow: 0 0 20px #00ff00;
+            }
+        }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle linear infinite;
+        }
+
+        /* Twinkling effect */
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Error message styling */
+        .error {
+            color: #ff5555;
+            font-size: 1em;
+            margin: 10px 0;
+        }
+
+        /* Success message styling */
+        .msg {
+            color: #7fffd4;
+            font-size: 1em;
+            margin: 10px 0;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>LOGIN</h1>
+
+    <form id="loginForm" th:action="@{/login}" method="post">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Player 1" required />
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="" required />
+        </div>
+        <div>
+            <button type="submit">START</button>
+        </div>
+    </form>
+
+    <div th:if="${errorMsg}">
+        <p th:text="${errorMsg}" class="error"></p>
+    </div>
+    <div th:if="${msg}">
+        <p th:text="${msg}" class="msg"></p>
+    </div>
+
+    <!-- Space Invaders theme sound effect -->
+    <audio id="loginSound" src="https://www.myinstants.com/media/sounds/space-invaders-shooting.mp3" preload="auto"></audio>
+
+    <script>
+        // Space Invaders sound effect on login click
+        const loginForm = document.getElementById('loginForm');
+        const loginSound = document.getElementById('loginSound');
+
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission for now
+            loginSound.play(); // Play sound
+
+            // Simulate login action and reload after a delay
+            setTimeout(() => {
+                alert('Player 1 Ready!');
+                loginForm.submit(); // Submit the form after sound plays
+            }, 2000); // Delay enough to let sound finish
+        });
+
+        // Generate random stars for the background
+        function createStars(numStars) {
+            const body = document.body;
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Randomize position and size
+                const size = Math.random() * 3 + 1; // Size between 1px and 4px
+                star.style.width = ${size}px;
+                star.style.height = ${size}px;
+                star.style.left = ${Math.random() * 100}vw; // Random horizontal position
+                star.style.top = ${Math.random() * 100}vh; // Random vertical position
+
+                // Randomize the twinkling speed for each star
+                const speed = Math.random() * 2 + 2; // Speed between 2s and 4s
+                star.style.animationDuration = ${speed}s;
+
+                body.appendChild(star);
+            }
+        }
+
+        // Call the function to create 200 stars
+        createStars(200);
+    </script>
+</body>
+</html>

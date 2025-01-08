@@ -1,0 +1,47 @@
+#spring.application.name=bankingApp
+#server.port=9090
+#
+#spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+#spring.datasource.username=postgres
+#spring.datasource.password=root
+#spring.datasource.driverClassName=org.postgresql.Driver
+#spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+
+#jpa (to create table automatically if not there and also update table)
+#spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.generate-ddl=true
+
+#spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+#spring.datasource.username=system
+#spring.datasource.password=root
+#spring.datasource.driverClassName=oracle.jdbc.driver.OracleDriver
+#spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.OracleDialect
+
+#to print sql hit in console
+#spring.jpa.show-sql=true 
+#
+#management.endpoints.web.exposure.include=*
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+server:
+    port: 9090
+spring:
+    application:
+        name: bankingApp
+    datasource:
+        driverClassName: org.postgresql.Driver
+        password: pass
+        url: jdbc:postgresql://localhost:5431/postgres
+        username: postgres
+    jpa:
+        generate-ddl: true
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: 'true'

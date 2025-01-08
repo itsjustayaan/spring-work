@@ -1,0 +1,20 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<wsdd:deployment xmlns:java="http://xml.apache.org/axis/wsdd/providers/java"
+    xmlns:wsdd="http://xml.apache.org/axis/wsdd/">
+  <wsdd:service name="Calculator" provider="java:RPC" use="encoded" style="document">
+    <wsdd:parameter name="wsdlTargetNamespace" value="http://training.com"/>
+    <wsdd:parameter name="wsdlServiceElement" value="CalculatorService"/>
+    <wsdd:parameter name="wsdlServicePort" value="Calculator"/>
+    <wsdd:parameter name="className" value="com.training.CalculatorSoapBindingImpl"/>
+    <wsdd:parameter name="wsdlPortType" value="Calculator"/>
+    <wsdd:parameter name="typeMappingVersion" value="1.2"/>
+    <wsdd:parameter name="allowedMethods" value="*"/>
+  </wsdd:service>
+</wsdd:deployment>
